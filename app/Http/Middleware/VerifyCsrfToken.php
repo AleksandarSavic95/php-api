@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        // 'api/*' https://github.com/barryvdh/laravel-cors#disabling-csrf-protection-for-your-api
     ];
 }
