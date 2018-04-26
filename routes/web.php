@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/hash', function () {
+    echo Hash::make('alexalex');
+});
