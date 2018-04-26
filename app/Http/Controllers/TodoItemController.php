@@ -12,28 +12,30 @@ class TodoItemController extends Controller
         return TodoItem::all();
     }
 
-    public function show(TodoItem $todoitems)
+    public function show(TodoItem $todoitem)
     {
-        return $todoitems;
+        return $todoitem;
     }
 
     public function store(Request $request)
     {
-        $todoitems = TodoItem::create($request->all());
+        // \Log::info($request);
 
-        return response()->json($todoitems, 201);
+        $todoitem = TodoItem::create($request->all());
+
+        return response()->json($todoitem, 201);
     }
 
-    public function update(Request $request, TodoItem $todoitems)
+    public function update(Request $request, TodoItem $todoitem)
     {
-        $todoitems->update($request->all());
+        $todoitem->update($request->all());
 
-        return response()->json($todoitems, 200);
+        return response()->json($todoitem, 200);
     }
 
-    public function delete(TodoItem $todoitems)
+    public function delete(TodoItem $todoitem)
     {
-        $todoitems->delete();
+        $todoitem->delete();
 
         return response()->json(null, 204);
     }
