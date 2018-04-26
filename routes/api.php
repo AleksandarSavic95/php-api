@@ -18,6 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// one to many obtain test
+// https://laravel.com/docs/5.6/eloquent-relationships#one-to-many
+Route::get('/users/1/todoitems', function() {
+    echo App\User::find(1)->todoItems;
+});
+
 Route::group([
 
     'middleware' => 'api',
