@@ -10,11 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// use App\Constants\Priority as Priority;
+
+include(app_path() . '/constants.php');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/hash', function () {
-    echo Hash::make('alexalex');
+    echo Priority::$PRIORITY_LOW;
 });
