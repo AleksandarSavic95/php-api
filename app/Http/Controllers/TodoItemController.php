@@ -4,38 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\TodoItem;
+use \App\User;
 
 class TodoItemController extends Controller
 {
     public function index()
     {
-        return TodoItem::all();
+        $userId = 1;
+        // $userId = Auth::User()->id; // Auth::user() ?
+        // info($userId);
+        // $userId = Auth::id();
+        // info($userId);
+        return User::find($userId)->todoItems;
     }
 
-    public function show(TodoItem $todoitem)
+    public function show(TodoItem $todoItem)
     {
-        return $todoitem;
+        return $todoItem;
     }
 
     public function store(Request $request)
     {
-        // \Log::info($request);
-
-        $todoitem = TodoItem::create($request->all());
-
-        return response()->json($todoitem, 201);
+        // TODO: set user_id of created item to id of the authenticated user
+        // array_merge is used because it overrides the existing key!
+        return TodoItem::create(array_merge($request->all(), ['user_id' => 1]));
     }
 
-    public function update(Request $request, TodoItem $todoitem)
+    public function update(Request $request, TodoItem $todoItem)
     {
-        $todoitem->update($request->all());
+        // remove 'user_id' from request array to prevent change of ownership
+        unset($request['user_id']);
 
-        return response()->json($todoitem, 200);
+        $todoItem->update($request->all());
+
+        return response()->json($todoItem, 200);
     }
 
-    public function delete(TodoItem $todoitem)
+    public function delete(TodoItem $todoItem)
     {
-        $todoitem->delete();
+        $todoItem->delete();
 
         return response()->json(null, 204);
     }
