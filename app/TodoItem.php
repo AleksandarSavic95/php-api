@@ -12,6 +12,14 @@ class TodoItem extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'priority', 'done'
+        'title', 'content', 'priority', 'is_done', 'user_id'
     ];
+
+    /**
+     * Get the user that owns the item.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
