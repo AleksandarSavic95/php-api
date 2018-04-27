@@ -11,10 +11,6 @@ class TodoItemController extends Controller
     public function index()
     {
         $userId = 1;
-        // $userId = Auth::User()->id; // Auth::user() ?
-        // info($userId);
-        // $userId = Auth::id();
-        // info($userId);
         return User::find($userId)->todoItems;
     }
 
@@ -25,8 +21,6 @@ class TodoItemController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: set user_id of created item to id of the authenticated user
-        // array_merge is used because it overrides the existing key!
         return TodoItem::create(array_merge($request->all(), ['user_id' => 1]));
     }
 
