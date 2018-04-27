@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Use App\TodoItem;
+
 // this was already here - probably will be deleted in near future
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -31,3 +33,15 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+// CRUD API
+
+Route::get('todoitems', 'TodoItemController@index');
+Route::get('todoitems/{todoItem}', 'TodoItemController@show');
+Route::post('todoitems', 'TodoItemController@store');
+Route::put('todoitems/{todoItem}', 'TodoItemController@update');
+Route::delete('todoitems/{todoItem}', 'TodoItemController@delete');
+
+// Route::group(['middleware' => 'jwt.auth'], function()   {
+//     Route::resource('todoitems', 'TodoItemController@index');
+// });
