@@ -21,27 +21,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
-
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
 
 // CRUD API
-
-Route::get('todoitems', 'TodoItemController@index');
-Route::get('todoitems/{todoItem}', 'TodoItemController@show');
-Route::post('todoitems', 'TodoItemController@store');
-Route::put('todoitems/{todoItem}', 'TodoItemController@update');
-Route::delete('todoitems/{todoItem}', 'TodoItemController@delete');
-
-// Route::group(['middleware' => 'jwt.auth'], function()   {
-//     Route::resource('todoitems', 'TodoItemController@index');
-// });
+Route::apiResource('todoItems', 'API\TodoItemController');
