@@ -6,22 +6,31 @@ use Illuminate\Http\Request;
 use \App\TodoItem;
 use \App\User;
 
+use Auth;
+
 class TodoItemController extends Controller
 {
     public function index()
     {
-        $userId = 1;
+        $userId = Auth::id();
+
         return User::find($userId)->todoItems;
     }
 
     public function show(TodoItem $todoItem)
     {
-        return $todoItem;
+        if ($todoItem->user_id == Auth::id()) {
+            return $todoItem;
+        }
+        
+        return response()->json(null, 404);
     }
 
     public function store(Request $request)
     {
-        return TodoItem::create(array_merge($request->all(), ['user_id' => 1]));
+        $userId = Auth::id();
+        
+        return TodoItem::create(array_merge($request->all(), ['user_id' => $userId]));
     }
 
     public function update(Request $request, TodoItem $todoItem)
