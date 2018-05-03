@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
+use App\User;
+use JWTAuth;
+
+// use Request;
+
 class AuthController extends Controller
 {
     /**
@@ -24,15 +29,28 @@ class AuthController extends Controller
      */
     public function login()
     {
+        info(request());
+        // info($request);
+
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        info($credentials);
 
+        $user = User::where('email', $credentials['email'])->first();
+        
+        $token = null;
+        try {
+            if (!$user) {
+                return response()->json(['error' => 'Unregistered'], 403);
+            }
+            $token = JWTAuth::fromUser($user);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+        
         return $this->respondWithToken($token);
     }
-
+    
     /**
      * Get the authenticated User.
      *
@@ -42,7 +60,7 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
-
+    
     /**
      * Log the user out (Invalidate the token).
      *
@@ -51,7 +69,6 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 
