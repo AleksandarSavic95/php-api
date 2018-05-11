@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hash', function () {
-    echo Priority::$PRIORITY_LOW;
+Route::get('/test-axios', function () {
+    echo 'works!';
 });
