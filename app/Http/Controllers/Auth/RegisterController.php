@@ -63,6 +63,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        info('\nREGISTER in AuthController\n');
+        info(request());
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

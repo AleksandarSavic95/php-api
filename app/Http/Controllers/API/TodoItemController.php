@@ -20,7 +20,8 @@ class TodoItemController extends Controller
     public function index()
     {
         $userId = Auth::id();
-
+        info($userId);
+        info(User::find($userId)->todoItems);
         return User::find($userId)->todoItems;
     }
 
